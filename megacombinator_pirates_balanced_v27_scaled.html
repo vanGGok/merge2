@@ -39,13 +39,13 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;ba
 /* ===== Gameplay feedback / animation layer ===== */
 .railitem{position:relative;overflow:hidden;isolation:isolate;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease,background .28s ease}
 .railitem.target{background:linear-gradient(145deg,#4f3f93,#8b5fe7 52%,#d7a63d)!important;border-color:#ffe7a1!important;color:#fff8df;transform:translateY(-3px) scale(1.035);box-shadow:0 0 0 3px rgba(255,221,109,.15),0 8px 22px rgba(255,205,75,.22),inset 0 1px rgba(255,255,255,.35)}
-.railitem.target::after{content:"";position:absolute;top:-30%;left:-45%;width:32%;height:160%;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);filter:blur(2px);animation:railShine 2.8s ease-in-out infinite;pointer-events:none;z-index:3}
+.railitem.target::after{content:none;animation:none}
 .railitem.just-done{animation:targetDone .65s cubic-bezier(.2,.9,.2,1) both}
 .railitem.target-new{animation:targetNew .78s cubic-bezier(.2,.9,.2,1) both}
 @keyframes railShine{0%,45%{left:-45%;opacity:0}55%{opacity:1}72%,100%{left:125%;opacity:0}}
 @keyframes targetDone{0%{transform:translateY(-3px) scale(1.035);box-shadow:0 0 0 3px rgba(255,221,109,.2),0 0 24px rgba(255,219,105,.4)}45%{transform:translateY(0) scale(1.12);box-shadow:0 0 0 8px rgba(255,229,145,.08),0 0 30px rgba(96,238,186,.45)}100%{transform:translateY(0) scale(1);box-shadow:inset 0 1px rgba(255,255,255,.04)}}
 @keyframes targetNew{0%{transform:translateY(10px) scale(.78);opacity:.25;filter:brightness(.8)}45%{transform:translateY(-5px) scale(1.14);opacity:1;filter:brightness(1.35)}100%{transform:translateY(-3px) scale(1.035);filter:none}}
-.progress{position:relative}.progress>i{position:relative;overflow:hidden;transition:none}.progress.animate>i{transition:width .85s cubic-bezier(.22,1,.36,1)}
+.progress{position:relative}.progress>i{position:relative;overflow:hidden;transition:width .9s cubic-bezier(.22,1,.36,1)}.progress.animate>i{transition:width .9s cubic-bezier(.22,1,.36,1)}
 .progress.animate::after{content:"";position:absolute;top:0;left:-25%;width:22%;height:100%;background:linear-gradient(90deg,transparent,#fff8,transparent);filter:blur(1px);animation:progressSweep .85s ease-out forwards;pointer-events:none}
 @keyframes progressSweep{to{left:115%;opacity:0}}
 .progress.bump>i{animation:progressPulse .8s ease-out}
@@ -62,18 +62,14 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;ba
 .spawn::before{content:"";position:absolute;inset:2px 8% 58%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.34),transparent);pointer-events:none}
 .spawn:hover{transform:translateY(-2px);box-shadow:0 13px 0 rgba(6,89,72,.34),0 20px 32px rgba(24,182,127,.28),inset 0 2px rgba(255,255,255,.30),inset 0 -5px 0 rgba(0,0,0,.10)}
 .spawn.spawn-press{animation:spawnPress .34s cubic-bezier(.2,.9,.25,1)}
+.spawn.spawn-idle-pulse{animation:spawnIdlePulse .72s ease-in-out}
 @keyframes spawnPress{0%{transform:translateY(0) scale(1)}35%{transform:translateY(4px) scale(.96);box-shadow:0 4px 0 rgba(6,89,72,.5),0 7px 12px rgba(24,182,127,.15),inset 0 1px rgba(255,255,255,.16)}75%{transform:translateY(-2px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
-.spawn-flyer{position:fixed;z-index:90;width:68px;height:68px;margin:-34px 0 0 -34px;pointer-events:none;animation:spawnFly .58s cubic-bezier(.18,.82,.22,1) forwards}
-.spawn-flyer-image{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 12px rgba(0,0,0,.42))}
-@keyframes spawnFly{
-  0%{transform:translate(0,0) scale(.38);opacity:.95}
-  42%{transform:translate(calc(var(--tx)*.48),calc(var(--ty)*.28 - 56px)) scale(1.14);opacity:1}
-  78%{transform:translate(calc(var(--tx)*.92),calc(var(--ty)*.9 - 8px)) scale(1.04)}
-  100%{transform:translate(var(--tx),var(--ty)) scale(1);opacity:1}
-}
+@keyframes spawnIdlePulse{0%,100%{transform:translateY(0) scale(1);filter:brightness(1)}40%{transform:translateY(-2px) scale(1.045);filter:brightness(1.1)}}
+.spawn-flyer{position:fixed;z-index:90;width:72px;height:72px;margin:-36px 0 0 -36px;pointer-events:none;will-change:transform,opacity}
+.spawn-flyer-image{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 12px 14px rgba(0,0,0,.38))}
 .item-spawning{visibility:hidden!important}
-.item-landed{animation:itemLand .24s cubic-bezier(.2,.9,.25,1)}
-@keyframes itemLand{0%{transform:scale(.82)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+.item-landed{animation:itemLand .36s cubic-bezier(.22,1,.36,1)}
+@keyframes itemLand{0%{transform:scale(.88)}62%{transform:scale(1.06)}100%{transform:scale(1)}}
 
 .passbtn.pass-new{animation:passNew 1.25s cubic-bezier(.2,.9,.2,1)}
 .passbtn.pass-tick{animation:passAttention .9s ease-in-out}
@@ -93,7 +89,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;ba
 @keyframes stageGlow{0%{opacity:0;transform:scale(.7)}35%{opacity:1}100%{opacity:0;transform:scale(1.08)}}
 
 @media (prefers-reduced-motion: reduce){
-  .railitem.target::after,.railitem.just-done,.railitem.target-new,.progress.animate>i,.progress.animate::after,.progress.bump>i,.cell.merge-ready,.cell.merge-burst,.merge-particle,.spawn.spawn-press,.spawn-flyer,.item-landed,.passbtn.pass-new,.passbtn.pass-tick,.passbadge.pass-badge-new,.passbadge.pass-badge-shake,.stagebox.stage-new,.stagebox.stage-new::after,.boardwrap.stage-enter,.boardwrap.stage-exit,.boardwrap.stage-enter::after{animation:none!important;transition:none!important}
+  .railitem.target::after,.railitem.just-done,.railitem.target-new,.progress.animate>i,.progress.animate::after,.progress.bump>i,.cell.merge-ready,.cell.merge-burst,.merge-particle,.spawn.spawn-press,.spawn.spawn-idle-pulse,.spawn-flyer,.item-landed,.passbtn.pass-new,.passbtn.pass-tick,.passbadge.pass-badge-new,.passbadge.pass-badge-shake,.stagebox.stage-new,.stagebox.stage-new::after,.boardwrap.stage-enter,.boardwrap.stage-exit,.boardwrap.stage-enter::after{animation:none!important;transition:none!important}
 }
 
 @media(max-width:760px){.bottom{grid-template-columns:1fr}.scene{grid-template-columns:1fr auto}.pirate{font-size:48px}.info-grid{grid-template-columns:repeat(2,1fr)}.title{font-size:24px}.speech{max-width:none}}
@@ -231,6 +227,10 @@ body:before{opacity:.08;background-size:30px 30px}
 .railitem .tier-icon-image{width:30px;height:30px}
 .progress{margin-top:7px;flex:0 0 auto}
 .content > .boardwrap{grid-area:board;margin:0;align-self:center;width:100%}
+.progress-h{height:10px;margin:0 6px 10px;border-radius:99px;background:rgba(0,0,0,.38);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.progress-h>i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#3fd28a,#3ec4e0 48%,#efc34f);box-shadow:0 0 12px rgba(80,220,170,.28)}
+.railitem.tier-unlock{animation:tierUnlock .85s cubic-bezier(.2,.9,.25,1)}
+@keyframes tierUnlock{0%{transform:scale(.82);filter:brightness(.7)}40%{transform:scale(1.16);filter:brightness(1.4)}100%{transform:scale(1);filter:none}}
 .content > .queue{grid-area:queue;margin:0;min-height:52px;align-self:end}
 .content > .bottom{grid-area:side;margin:0;display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;grid-template-areas:"spawn" "meter" "stage";gap:10px;align-self:end}
 .content > .bottom .spawn{grid-area:spawn;min-height:84px;border-radius:24px;flex-direction:column;gap:2px;font-size:13px;position:relative}
@@ -316,7 +316,8 @@ body.fit-mode .content > .queue{min-width:0}
 .win-counter-stat>span:first-child{grid-row:1/3;font-size:27px;line-height:1}
 .win-counter-stat>span:nth-child(2){font-size:20px;font-weight:950;line-height:1}
 .win-counter-stat small{font-size:9px;color:#9fb6c7;line-height:1.1}
-.anvil-count{display:flex;align-items:center;justify-content:center;gap:7px;min-height:54px}
+.anvil-count{display:flex;align-items:center;justify-content:center;gap:7px;min-height:54px;position:relative}
+.admin-meter-btn{width:32px!important;height:32px!important;font-size:16px!important;flex:0 0 auto;margin-left:2px}
 .anvil-count span{font-size:43px;line-height:1;filter:drop-shadow(0 4px 6px rgba(0,0,0,.28))}
 .anvil-count b{font-size:27px;color:#fff;font-weight:950;line-height:1}
 .content > .bottom .meter{text-align:center;padding:7px 9px;min-height:64px}
@@ -371,7 +372,7 @@ body.fit-mode .queue>div:last-child{display:flex;align-items:center;gap:6px;flex
 .reward-main-chest .title{font-size:20px;color:#ffe9a5;font-weight:950;margin-top:6px}
 .reward-main-chest .sub{display:block;color:#9cb4c8;font-size:11px;line-height:1.35;margin-top:4px}
 .reward-main-chest.unlocked{border-color:rgba(255,211,90,.55);box-shadow:0 0 0 5px rgba(255,211,90,.06),0 0 36px rgba(255,211,90,.24),inset 0 1px rgba(255,255,255,.10);animation:rewardChestGlow 1.8s ease-in-out infinite}
-@keyframes rewardTargetPulse{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.04);filter:brightness(1.08)}}
+@keyframes rewardTargetPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
 @keyframes rewardChestGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.15);box-shadow:0 0 0 6px rgba(255,211,90,.06),0 0 46px rgba(255,211,90,.26),inset 0 1px rgba(255,255,255,.12)}}
 
 /* Pass: exactly three columns — task / free / premium */
@@ -472,6 +473,11 @@ body.fit-mode .queue>div:last-child{display:flex;align-items:center;gap:6px;flex
 .reward-node:after{display:none}
 .reward-node.done{border-color:rgba(99,230,176,.26);background:linear-gradient(180deg,rgba(33,117,86,.28),rgba(255,255,255,.035))}
 .reward-node.target{border-color:rgba(255,211,90,.68);box-shadow:0 0 0 2px rgba(255,211,90,.09),0 0 22px rgba(255,211,90,.18),inset 0 1px rgba(255,255,255,.10)}
+.reward-now{position:absolute;top:5px;left:50%;transform:translateX(-50%);z-index:5;font-size:8px;font-weight:950;letter-spacing:.06em;text-transform:uppercase;color:#2a1c0b;background:#ffd35a;border-radius:99px;padding:2px 7px;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,.22)}
+.railitem.target{overflow:visible;padding-top:16px}
+.railitem .reward-now{top:2px;font-size:7px;padding:1px 6px}
+.reward-dot{position:relative;overflow:hidden}
+.reward-dot .reward-now{top:auto;bottom:4px;transform:translateX(-50%)}
 .reward-node.locked{opacity:.72}
 .reward-dot{
   width:clamp(42px,4.1vw,58px);height:clamp(42px,4.1vw,58px);margin:0 auto 5px;
@@ -596,7 +602,6 @@ body.fit-mode .queue>div:last-child{display:flex;align-items:center;gap:6px;flex
 .pass-line-label{position:relative;overflow:hidden;min-height:82px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 7px;border-radius:12px;border:1px solid rgba(255,255,255,.10);font-size:clamp(9px,1vw,12px);font-weight:950;line-height:1.1;box-shadow:inset 0 1px rgba(255,255,255,.12),0 6px 12px rgba(0,0,0,.14);white-space:normal}
 .pass-line-label.free{background:linear-gradient(135deg,#25b87e,#158765);color:#d0ffe9;border-color:rgba(125,255,199,.55);box-shadow:0 0 0 2px rgba(99,230,176,.06),0 0 20px rgba(44,214,154,.22),inset 0 1px rgba(255,255,255,.20)}
 .pass-line-label.premium{background:linear-gradient(135deg,#3c3154,#241e34);color:#c8bbd7;border-color:rgba(207,166,255,.22);box-shadow:inset 0 1px rgba(255,255,255,.08),0 6px 12px rgba(0,0,0,.18);cursor:pointer}
-.pass-line-label.premium:not(.owned):after{content:"";position:absolute;top:-25%;left:-35%;width:26%;height:160%;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);filter:blur(2px);animation:passGlint 2.6s ease-in-out infinite;pointer-events:none}
 .pass-line-label.premium.owned{background:linear-gradient(135deg,#b76cff,#6c3de0);color:#fff;border-color:rgba(235,209,255,.72);box-shadow:0 0 0 3px rgba(204,155,255,.08),0 0 24px rgba(169,98,255,.38),inset 0 1px rgba(255,255,255,.22);cursor:default}
 .pass-stage-head{grid-column:1/-1;display:grid;grid-template-columns:clamp(92px,15vw,150px) repeat(8,minmax(0,1fr));gap:5px;margin-bottom:-1px}
 .pass-stage-head .spacer{min-width:0}
@@ -783,53 +788,51 @@ body.fit-mode .queue>div:last-child{display:flex;align-items:center;gap:6px;flex
 .pass-gift-icon{width:100%;height:50px;display:flex;align-items:center;justify-content:center;font-size:0!important;filter:none!important}
 .pass-gift-icon .hammer-slot{flex:0 0 auto}
 
-/* Pass button: red at rest, deep green when a reward is available. */
+/* Pass button: same sculpted shape as spawn, red at rest / green when ready. */
 .pass-slot .passbtn{
   position:relative;
   overflow:hidden;
-  min-height:92px!important;
-  border:3px solid #55241f!important;
-  border-radius:20px!important;
-  color:#fff7eb!important;
+  min-height:84px!important;
+  border:1px solid rgba(255,180,160,.35)!important;
+  border-radius:24px!important;
+  color:#fff!important;
   font-family:'Roboto',Arial,sans-serif!important;
   font-size:13px!important;
   font-weight:900!important;
   letter-spacing:.02em;
-  background:linear-gradient(145deg,#d45849 0%,#ae3d37 48%,#802b29 100%)!important;
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.28),
-    inset 0 -5px 0 rgba(71,20,17,.24),
-    0 7px 0 #57201c,
-    0 13px 22px rgba(35,12,10,.30)!important;
+  background:linear-gradient(135deg,#d45849,#ae3d37)!important;
+  box-shadow:0 11px 0 rgba(87,32,28,.38),0 17px 28px rgba(176,61,55,.24),inset 0 2px rgba(255,255,255,.28),inset 0 -5px 0 rgba(0,0,0,.10)!important;
   text-shadow:0 2px 0 rgba(70,20,15,.42);
   transform:translateY(0);
   transition:transform .12s ease,filter .12s ease,box-shadow .12s ease;
 }
-.pass-slot .passbtn::after{
+.pass-slot .passbtn::before{
   content:"";
   position:absolute;
-  left:8%;right:8%;top:7px;height:30%;
+  inset:2px 8% 58%;
   border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0));
+  background:linear-gradient(180deg,rgba(255,255,255,.34),transparent);
   pointer-events:none;
 }
-.pass-slot .passbtn:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:inset 0 2px 0 rgba(255,255,255,.30),inset 0 -5px 0 rgba(71,20,17,.24),0 8px 0 #57201c,0 16px 25px rgba(35,12,10,.33)!important}
-.pass-slot .passbtn:active{transform:translateY(5px);box-shadow:inset 0 2px 0 rgba(255,255,255,.20),inset 0 -3px 0 rgba(71,20,17,.20),0 2px 0 #57201c,0 7px 13px rgba(35,12,10,.25)!important}
+.pass-slot .passbtn::after{display:none}
+.pass-slot .passbtn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 13px 0 rgba(87,32,28,.34),0 20px 32px rgba(176,61,55,.28),inset 0 2px rgba(255,255,255,.30),inset 0 -5px 0 rgba(0,0,0,.10)!important}
+.pass-slot .passbtn:active{transform:translateY(4px);box-shadow:0 4px 0 rgba(87,32,28,.5),0 7px 12px rgba(176,61,55,.15),inset 0 1px rgba(255,255,255,.16)!important}
 .pass-slot .passbtn.hot{
-  background:linear-gradient(145deg,#287351 0%,#1c5d40 48%,#123f2d 100%)!important;
-  border-color:#173d2f!important;
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.20),
-    inset 0 -5px 0 rgba(7,35,24,.28),
-    0 7px 0 #0c3023,
-    0 13px 22px rgba(7,34,24,.30)!important;
+  background:linear-gradient(135deg,#21b978,#169d8c)!important;
+  border-color:rgba(158,255,214,.35)!important;
+  box-shadow:0 11px 0 rgba(6,89,72,.38),0 17px 28px rgba(24,182,127,.24),inset 0 2px rgba(255,255,255,.28),inset 0 -5px 0 rgba(0,0,0,.10)!important;
 }
-.pass-slot .passbtn.hot:hover{box-shadow:inset 0 2px 0 rgba(255,255,255,.23),inset 0 -5px 0 rgba(7,35,24,.30),0 8px 0 #0c3023,0 16px 25px rgba(7,34,24,.34)!important}
+.pass-slot .passbtn.hot:hover{box-shadow:0 13px 0 rgba(6,89,72,.34),0 20px 32px rgba(24,182,127,.28),inset 0 2px rgba(255,255,255,.30),inset 0 -5px 0 rgba(0,0,0,.10)!important}
+.pass-slot .passbtn{flex-direction:column;gap:2px;padding:8px 8px 10px!important}
+.pass-icon{width:clamp(56px,8vw,78px);height:clamp(56px,8vw,78px);object-fit:contain;display:block;position:relative;z-index:1;filter:drop-shadow(0 5px 7px rgba(0,0,0,.32));pointer-events:none}
+.pass-label{position:relative;z-index:1;font-size:11px;line-height:1;letter-spacing:.04em}
 
 /* The purchase price is one wide, horizontal plaque. */
 .pass-buy{display:block!important;margin-top:14px!important;padding-top:0!important;border-top:0!important;width:100%!important}
 .pass-buy .pass-price-button{
   display:block!important;
+  position:relative;
+  overflow:hidden;
   width:100%!important;
   min-height:58px!important;
   margin:0!important;
@@ -1086,6 +1089,15 @@ body,button,input,textarea,select{font-family:Roboto,Arial,sans-serif!important}
   box-shadow:0 8px 16px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.10);
 }
 .modal.modal-rewards .reward-node.done{background:linear-gradient(180deg,#1b6a52,#15483f);border-color:rgba(99,230,176,.55)}
+.modal.modal-rewards .reward-node.target{
+  background:linear-gradient(180deg,#7a5a24,#4a3270 52%,#1d4258);
+  border:2px solid #ffe08a;
+  box-shadow:0 0 0 3px rgba(255,211,90,.22),0 0 28px rgba(255,211,90,.42),inset 0 1px rgba(255,255,255,.16);
+  transform:none;
+  z-index:2;
+  overflow:hidden;
+}
+.reward-progress{margin:2px 4px 12px}
 .modal.modal-rewards .reward-node.locked{opacity:.92;filter:none}
 .modal.modal-rewards .reward-dot{
   background:linear-gradient(145deg,#2a6784,#1c4258);
@@ -1141,24 +1153,57 @@ body,button,input,textarea,select{font-family:Roboto,Arial,sans-serif!important}
   .modal-logo{width:min(70vw,270px);max-height:53px}
   .pass-stage .pass-stage-image{width:46px!important;height:46px!important}
 }
+.pass-line-label.pass-buy-glint::after,
+.pass-price-button.pass-buy-glint::after,
+.pass-gift.ready.pass-ready-glint::after,
+.reward-chip.reward-wave-glint::after,
+.reward-rewards.reward-wave-glint::after{
+  content:"";position:absolute;top:-40%;left:-60%;width:48%;height:180%;
+  transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.96),transparent);
+  filter:blur(1px);animation:readySweep .95s ease-out forwards;pointer-events:none;z-index:4
+}
+.reward-rewards,.reward-chip{position:relative;overflow:hidden}
+@keyframes readySweep{0%{left:-60%;opacity:0}16%{opacity:1}100%{left:135%;opacity:0}}
+.pass-reward-list{perspective:1100px}
+.pass-gift{transform-style:preserve-3d}
+.pass-gift.claiming{animation:passCardFlip .64s cubic-bezier(.2,.8,.22,1) both;z-index:3}
+@keyframes passCardFlip{
+  0%{transform:rotateY(0) scale(1)}
+  46%{transform:rotateY(90deg) scale(.94)}
+  54%{transform:rotateY(-90deg) scale(.94)}
+  100%{transform:rotateY(0) scale(1)}
+}
+.pass-gift.claimed-flip,
+.modal.modal-pass .pass-gift.claimed-flip{
+  background:linear-gradient(180deg,#27c57a,#148a52)!important;
+  border:3px solid #9dffc8!important;
+  box-shadow:0 0 0 3px rgba(110,255,180,.30),0 0 22px rgba(48,214,128,.40)!important;
+  overflow:visible;
+}
+.pass-claim-check{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,4vw,52px);font-weight:950;color:#fff;text-shadow:0 4px 10px rgba(0,0,0,.28);line-height:1}
+.help-wrap{display:flex;justify-content:center;align-items:center}
+.help-image{width:100%;max-width:920px;height:auto;display:block;border-radius:16px}
+@media (prefers-reduced-motion: reduce){
+  .pass-gift.ready.pass-ready-glint::after,.reward-node.reward-wave-glint::after,.pass-gift.claiming{animation:none!important}
+}
 </style>
 
 </head>
 <body>
 <div class="app"><div class="shell">
   <section class="topscene">
-    <div class="brand"><div class="brand-main"><div class="event-logo-wrap"><img class="event-logo" src="https://raw.githubusercontent.com/vanGGok/merge2/main/assets/images/logo.png" alt="Пиратика" loading="eager" onerror="if(this.dataset.fb)return;this.dataset.fb=1;this.src='./assets/images/logo.png'"></div><div class="sub">Пиратский merge-рейд • ограниченное событие</div></div><div class="controls"><button class="iconbtn" id="infoBtn">i</button><button class="iconbtn" id="adminBtn" title="Админ">⚙</button><button class="iconbtn" id="closeBtn">✕</button></div></div>
+    <div class="brand"><div class="brand-main"><div class="event-logo-wrap"><img class="event-logo" src="https://raw.githubusercontent.com/vanGGok/merge2/main/assets/images/logo.png" alt="Пиратика" loading="eager" onerror="if(this.dataset.fb)return;this.dataset.fb=1;this.src='./assets/images/logo.png'"></div><div class="sub">Пиратский merge-рейд • ограниченное событие</div></div><div class="controls"><button class="iconbtn" id="infoBtn">i</button><button class="iconbtn" id="closeBtn">✕</button></div></div>
     <div class="scene"><div><div class="speech" id="speech">Два одинаковых сокровища — и получим предмет следующего тира!<small>Собери цепочку до главного сундука.</small></div></div><div class="pirate">🏴‍☠️</div></div>
   </section>
   <section class="content">
-    <div class="rail"><div class="railscroll" id="rail"></div><div class="progress"><i id="progressBar"></i></div></div>
-    <div class="boardwrap" id="boardwrap"><div class="grid" id="grid"></div></div>
+    <div class="rail"><div class="railscroll" id="rail"></div></div>
+    <div class="boardwrap" id="boardwrap"><div class="progress progress-h"><i id="progressBar"></i></div><div class="grid" id="grid"></div></div>
     <div class="queue" id="queue"><div><span class="qicon">📦</span> Остаток с прошлого поля</div><div><span class="badge" id="queueCount">0</span> <span id="queueItem">—</span> <span class="badge">Тап — получить</span></div></div>
     <div class="bottom"><div class="meter"><div class="anvil-count"><span class="hammer-slot hammer-slot-small" aria-hidden="true"></span><b id="currency">2</b></div></div><button class="spawn" id="spawn"><span class="hammer-slot hammer-slot-main" aria-hidden="true"></span></button><div class="stagebox"><div>ЭТАП</div><b id="stageNum">1/12</b></div></div>
-    <div class="pass-slot"><button class="footerbtn passbtn hot" id="passBtn">🎟️ ПРОПУСК <span class="passbadge" id="passBadge">1</span></button></div>
+    <div class="pass-slot"><button class="footerbtn passbtn hot" id="passBtn"><img class="pass-icon" src="https://raw.githubusercontent.com/vanGGok/merge2/main/assets/images/pass_icon.jpg" alt="" onerror="if(this.dataset.fb)return;this.dataset.fb=1;this.src='./assets/images/pass_icon.jpg'"><span class="pass-label">ПРОПУСК</span><span class="passbadge" id="passBadge">1</span></button></div>
   </section>
 </div></div>
-<div class="win-counter" id="testPanel"><button id="winBtn">🏁 Победить уровень</button><div class="win-counter-stat"><span class="hammer-slot hammer-slot-test" aria-hidden="true"></span><span id="spentAnvils">0</span><small>смерджено</small></div></div>
+<div class="win-counter" id="testPanel"><button id="winBtn">+100</button><div class="win-counter-stat"><span class="hammer-slot hammer-slot-test" aria-hidden="true"></span><span id="spentAnvils">0</span><small>смерджено</small></div><button class="iconbtn admin-meter-btn" id="adminBtn" title="Админ">⚙</button></div>
 
 <div class="modal" id="modal"><div class="modalcard">
   <div class="modalhead"><div class="modalh" id="modalTitle">Как играть</div><button class="close" id="modalClose">✕</button></div><div id="modalBody"></div>
@@ -1347,17 +1392,16 @@ function render(){
   // Цепочка визуально идёт снизу вверх: T1 внизу, текущая/следующие цели выше.
   for(let t=12;t>=1;t--){
     const d=document.createElement('div');
-    d.className='railitem '+(t<s.goal?'done ':'')+(t===s.goal?'target':'');
+    d.className='railitem '+(t<s.goal||discoveredTiers.has(t)?'done ':'')+(t===s.goal?'target':'');
     d.dataset.tier=String(t);
     d.setAttribute('role','button');
     d.tabIndex=0;
-    d.innerHTML=`<div class="tier-icon">${itemImg(t,'tier-icon-image')}</div>`;
+    d.innerHTML=`${t===s.goal?'<div class="reward-now">Цель</div>':''}<div class="tier-icon">${itemImg(t,'tier-icon-image')}</div>`;
     d.addEventListener('click',()=>openRewardMap(t));
     d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRewardMap(t)}});    
     rail.appendChild(d)
   }
-  const progressPct=((s.goal-1)/11*100)+'%';
-  $('progressBar').style.width=progressPct;
+  updateProgressBar(false);
   $('grid').style.gridTemplateColumns=`repeat(${s.w},1fr)`;$('grid').innerHTML='';
   grid.forEach((it,i)=>{
     const c=document.createElement('div');
@@ -1544,6 +1588,7 @@ function merge(a,b){
   const resultIndex=b;
   const glassIndex=B.web?b:(A.web?a:null);
   const resultTier=t+1;
+  const isNewTier=!discoveredTiers.has(resultTier);
   grid[a]=null;
   grid[b]=null;
   grid[resultIndex]={t:resultTier,web:false,box:null,anvilIds:mergedAnvilIds};
@@ -1555,6 +1600,7 @@ function merge(a,b){
 
   if(glassIndex!==null)revealAdjacentBoxes(glassIndex);
   render();
+  if(isNewTier)setTimeout(()=>animateTierUnlock(resultTier),30);
   setTimeout(()=>playMergeEffect(resultIndex),20);
 
   if(completedTarget)newTargetReward(resultTier);
@@ -1586,24 +1632,26 @@ function playMergeEffect(index){
 function flySpawnToCell(i,done){
   const btn=$('spawn');
   const cell=$('grid').children[i];
-  if(!btn||!cell||window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    if(typeof done==='function')done();
-    return;
-  }
+  const finish=()=>{if(typeof done==='function')done()};
+  if(!btn||!cell||window.matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return}
   const from=btn.getBoundingClientRect();
   const to=cell.getBoundingClientRect();
+  const dx=(to.left+to.width/2)-(from.left+from.width/2);
+  const dy=(to.top+to.height/2)-(from.top+from.height/2);
+  const lift=Math.min(86,Math.abs(dx)*.22+36);
   const flyer=document.createElement('div');
   flyer.className='spawn-flyer';
   flyer.innerHTML=itemImg(1,'spawn-flyer-image');
   flyer.style.left=(from.left+from.width/2)+'px';
   flyer.style.top=(from.top+from.height/2)+'px';
-  flyer.style.setProperty('--tx',((to.left+to.width/2)-(from.left+from.width/2))+'px');
-  flyer.style.setProperty('--ty',((to.top+to.height/2)-(from.top+from.height/2))+'px');
   document.body.appendChild(flyer);
-  flyer.addEventListener('animationend',()=>{
-    flyer.remove();
-    if(typeof done==='function')done();
-  },{once:true});
+  const anim=flyer.animate([
+    {transform:'translate(0px,0px) scale(.46)',opacity:.75,offset:0},
+    {transform:`translate(${dx*.28}px,${dy*.18-lift}px) scale(.92)`,opacity:1,offset:.32},
+    {transform:`translate(${dx*.68}px,${dy*.58-lift*.22}px) scale(1.02)`,offset:.68},
+    {transform:`translate(${dx}px,${dy}px) scale(1)`,opacity:1,offset:1}
+  ],{duration:880,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
+  anim.onfinish=()=>{flyer.remove();finish()};
 }
 function sparkAtCell(i){
   const cell=$('grid').children[i];if(!cell)return;
@@ -1625,7 +1673,6 @@ function pulseStageBox(){
 function newTargetReward(t){
   pulseStageBox();
   const rewards=stages[stage-1].rewards;
-  // Сообщение показываем только там, где действительно есть награда.
   if(rewards.length)showReward(`🎁 Награда за T${t}`,rewards);
   if(stage<stages.length){
     claimPassHint();
@@ -1657,7 +1704,7 @@ function rewardMapHtml(focusTier=target){
         }).join('')}</div>`
       : '';
     return `<div class="reward-node ${discovered?'done ':''}${isTarget?'target ':''}${!discovered?'locked':''}" data-reward-tier="${t}">
-      <div class="reward-dot">${itemImg(t,'reward-tier-image')}</div>
+      <div class="reward-dot">${isTarget?'<div class="reward-now">Цель</div>':''}${itemImg(t,'reward-tier-image')}</div>
       ${rewardHtml}
     </div>`;
   }).join('');
@@ -1667,7 +1714,77 @@ function rewardMapHtml(focusTier=target){
     </div>
   </div>`;
 }
+let passGlintTimer=null, passBuyWaveTimer=null, rewardWaveTimer=null, rewardWaveRepeat=null;
+function stopModalFx(){
+  if(passGlintTimer){clearInterval(passGlintTimer);passGlintTimer=null}
+  if(passBuyWaveTimer){clearInterval(passBuyWaveTimer);passBuyWaveTimer=null}
+  if(rewardWaveTimer){clearTimeout(rewardWaveTimer);rewardWaveTimer=null}
+  if(rewardWaveRepeat){clearInterval(rewardWaveRepeat);rewardWaveRepeat=null}
+}
+function pulseReadyPassGifts(){
+  document.querySelectorAll('.pass-gift.ready').forEach(el=>{
+    el.classList.remove('pass-ready-glint');
+    void el.offsetWidth;
+    el.classList.add('pass-ready-glint');
+  });
+}
+function playPassBuyWave(){
+  const label=document.querySelector('.pass-line-label.premium:not(.owned)');
+  const price=document.querySelector('.pass-price-button');
+  [label,price].forEach((el,i)=>{
+    if(!el)return;
+    setTimeout(()=>{
+      el.classList.remove('pass-buy-glint');
+      void el.offsetWidth;
+      el.classList.add('pass-buy-glint');
+        },i*220);
+  });
+}
+function startPassReadyGlints(){
+  stopModalFx();
+  requestAnimationFrame(()=>{
+    pulseReadyPassGifts();
+    playPassBuyWave();
+  });
+  passGlintTimer=setInterval(pulseReadyPassGifts,10000);
+  passBuyWaveTimer=setInterval(playPassBuyWave,5500);
+}
+function playRewardWave(){
+  [7,8,9,10,11,12].forEach((t,i)=>{
+    setTimeout(()=>{
+      const node=document.querySelector(`.reward-node[data-reward-tier="${t}"]`);
+      if(!node)return;
+      const parts=node.querySelectorAll('.reward-chip,.reward-rewards');
+      (parts.length?parts:[node]).forEach(el=>{
+        el.classList.remove('reward-wave-glint');
+        void el.offsetWidth;
+        el.classList.add('reward-wave-glint');
+      });
+    },i*190);
+  });
+}
+function startRewardWave(){
+  stopModalFx();
+  rewardWaveTimer=setTimeout(()=>{
+    playRewardWave();
+    rewardWaveRepeat=setInterval(playRewardWave,15000);
+  },5000);
+}
+function playPassClaimFlip(card){
+  if(!card)return;
+  const swap=()=>{
+    card.classList.remove('ready');
+    card.classList.add('claimed','claimed-flip');
+    card.innerHTML='<div class="pass-claim-check">✓</div>';
+  };
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){swap();return}
+  card.classList.add('claiming');
+  card.querySelectorAll('button').forEach(b=>{b.onclick=null;b.disabled=true});
+  setTimeout(swap,300);
+  card.addEventListener('animationend',()=>card.classList.remove('claiming'),{once:true});
+}
 function setModalScene(scene){
+  stopModalFx();
   const modal=$('modal');
   const card=modal.querySelector('.modalcard');
   const title=$('modalTitle');
@@ -1697,6 +1814,7 @@ function openRewardMap(focusTier=target){
     const preferred=rewardTiers.find(t=>t>=focusTier) ?? rewardTiers[0] ?? focusTier;
     const el=map.querySelector(`[data-reward-tier="${preferred}"]`) || map.querySelector(`[data-reward-tier="${focusTier}"]`);
     if(el)el.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+    startRewardWave();
   });
 }
 
@@ -1723,22 +1841,38 @@ function fillFromQueue(){
   }
   return placed;
 }
+function progressPercent(){
+  const maxTier=discoveredTiers.size?Math.max(...discoveredTiers):1;
+  const stagePct=(stage-1)/12;
+  const tierPct=(Math.max(1,maxTier)-1)/11;
+  return Math.max(0,Math.min(100,Math.max(stagePct,tierPct)*100));
+}
+function updateProgressBar(animate){
+  const bar=$('progressBar');
+  if(!bar)return;
+  const track=bar.parentElement;
+  if(animate){
+    track.classList.remove('animate','bump');
+    void bar.offsetWidth;
+    track.classList.add('animate','bump');
+    setTimeout(()=>track.classList.remove('animate','bump'),1000);
+  }
+  bar.style.width=progressPercent()+'%';
+}
+function animateTierUnlock(t){
+  const item=document.querySelector(`.railitem[data-tier="${t}"]`);
+  if(item){
+    item.classList.add('tier-unlock','done');
+    setTimeout(()=>item.classList.remove('tier-unlock'),900);
+  }
+  updateProgressBar(true);
+}
 function animateChainTargetSwap(previousTier,nextTier){
   const prev=document.querySelector(`.railitem[data-tier="${previousTier}"]`);
   const next=document.querySelector(`.railitem[data-tier="${nextTier}"]`);
   if(prev)prev.classList.add('just-done');
   if(next)next.classList.add('target-new');
-  const bar=$('progressBar'), progress=bar?.parentElement;
-  if(progress){
-    const oldPct=((previousTier-1)/11*100)+'%';
-    const newPct=((nextTier-1)/11*100)+'%';
-    bar.style.width=oldPct;
-    progress.classList.remove('animate','bump');
-    void bar.offsetWidth;
-    progress.classList.add('animate','bump');
-    requestAnimationFrame(()=>{bar.style.width=newPct});
-    setTimeout(()=>progress.classList.remove('animate','bump'),1000);
-  }
+  updateProgressBar(true);
   setTimeout(()=>prev?.classList.remove('just-done'),750);
   setTimeout(()=>next?.classList.remove('target-new'),900);
 }
@@ -1789,30 +1923,26 @@ function availablePassRewards(){
   return n;
 }
 function claimPassHint(){render();if(availablePassRewards())toast('🎟️ Доступна награда пропуска')}
+function passGiftHtml(kind,p){
+  const unlocked=discoveredTiers.has(p.t);
+  const claimedNow=claimed[kind].includes(p.t);
+  if(claimedNow){
+    return `<div class="pass-gift ${kind} claimed claimed-flip" data-pass-tier="${p.t}"><div class="pass-claim-check">✓</div></div>`;
+  }
+  const canTake=kind==='free'?unlocked:(premium&&unlocked);
+  const state=canTake?'ready':'locked';
+  const click=canTake?`onclick="claimPass('${kind}',${p.t})"`:(kind==='premium'?`onclick="shakePassLock(${p.t})"`:'');
+  const text=canTake?'Забрать':'🔒';
+  return `<div class="pass-gift ${kind} ${state}" data-pass-tier="${p.t}">
+      <div class="pass-gift-icon"><span class="hammer-slot hammer-slot-pass" aria-hidden="true"></span></div>
+      <div class="pass-gift-amount">×${p[kind]}</div>
+      <button ${click} class="${state}">${text}</button>
+    </div>`;
+}
 function passHtml(){
   const stagesHead=passSteps.map(p=>`<div class="pass-stage"><span class="stage-icon">${itemImg(p.t,'pass-stage-image')}</span></div>`).join('');
-  const freeCells=passSteps.map((p)=>{
-    const unlocked=discoveredTiers.has(p.t), claimedNow=claimed.free.includes(p.t);
-    const state=claimedNow?'claimed':unlocked?'ready':'locked';
-    const click=claimedNow?'':(unlocked?`onclick="claimPass('free',${p.t})"`:'');
-    const text=claimedNow?'✓':unlocked?'Забрать':'🔒';
-    return `<div class="pass-gift free ${state}" data-pass-tier="${p.t}">
-      <div class="pass-gift-icon"><span class="hammer-slot hammer-slot-pass" aria-hidden="true"></span></div>
-      <div class="pass-gift-amount">×${p.free}</div>
-      <button ${click} class="${state}">${text}</button>
-    </div>`;
-  }).join('');
-  const premiumCells=passSteps.map((p)=>{
-    const unlocked=discoveredTiers.has(p.t), claimedNow=claimed.premium.includes(p.t);
-    const state=claimedNow?'claimed':(!premium||!unlocked)?'locked':'ready';
-    const click=claimedNow?'':(premium&&unlocked?`onclick="claimPass('premium',${p.t})"`:`onclick="shakePassLock(${p.t})"`);
-    const text=claimedNow?'✓':(premium&&unlocked?'Забрать':'🔒');
-    return `<div class="pass-gift premium ${state}" data-pass-tier="${p.t}">
-      <div class="pass-gift-icon"><span class="hammer-slot hammer-slot-pass" aria-hidden="true"></span></div>
-      <div class="pass-gift-amount">×${p.premium}</div>
-      <button ${click} class="${state}">${text}</button>
-    </div>`;
-  }).join('');
+  const freeCells=passSteps.map(p=>passGiftHtml('free',p)).join('');
+  const premiumCells=passSteps.map(p=>passGiftHtml('premium',p)).join('');
   return `<div class="pass-reward-list">
       <div class="pass-stage-head"><div class="spacer"></div>${stagesHead}</div>
       <button class="pass-line-label free">Бесплатно</button>${freeCells}
@@ -1829,20 +1959,23 @@ function shakePassLock(t){
   if(col){col.classList.remove('pass-lock-shake');void col.offsetWidth;col.classList.add('pass-lock-shake');setTimeout(()=>col.classList.remove('pass-lock-shake'),650)}
 }
 
-function openPass(){setModalScene('pass');$('modalTitle').innerHTML=uiLogo('logo_pass.png','modal-logo modal-logo-pass','Пропуск');$('modalBody').innerHTML=passHtml();$('modal').classList.add('open')}
+function openPass(){setModalScene('pass');$('modalTitle').innerHTML=uiLogo('logo_pass.png','modal-logo modal-logo-pass','Пропуск');$('modalBody').innerHTML=passHtml();$('modal').classList.add('open');startPassReadyGlints()}
 function buyPass(){premium=true;toast('🎟️ Платная ветка открыта');openPass();render()}
 function claimPass(kind,t){
   if(kind==='premium'&&!premium)return;
   if(!discoveredTiers.has(t)){toast(`🔒 Сначала создай T${t}`);return;}
   const p=passSteps.find(x=>x.t===t);if(!p)return;
   if(claimed[kind].includes(t))return;
-  claimed[kind].push(t);currency+=p[kind];toast(`+${p[kind]} 🪙`);openPass();render()
+  const card=document.querySelector(`.pass-gift.${kind}[data-pass-tier="${t}"]`);
+  if(card&&card.classList.contains('claiming'))return;
+  claimed[kind].push(t);currency+=p[kind];toast(`+${p[kind]} 🪙`);
+  playPassClaimFlip(card);
+  render();
 }
 function adminHtml(){
   const buttons=stages.map((s,i)=>`<button onclick="adminLoadLevel(${i+1})">Уровень ${i+1}<br><span style="font-size:11px;opacity:.7">T${s.goal} • ${s.w}×${s.h}</span></button>`).join('');
-  return `<div class="hero"><div style="font-size:22px;font-weight:900">⚙ Админ-панель</div><div class="admin-note">Служебный режим для тестирования. Выбор уровня просто загружает стартовую сетку из баланса. Пропуск текущего уровня засчитывает его целевой тир и открывает соответствующий таск пропуска.</div></div>
-  <div class="admin-actions"><button class="footerbtn" style="margin-top:0" onclick="adminSkipStage()">⏭️ Пропустить текущий уровень</button><button class="footerbtn" style="margin-top:0" onclick="adminMarkCurrentTask()">✅ Засчитать текущий таск</button></div>
-  <div style="margin-top:14px;font-weight:900">Выбор уровня</div><div class="admin-grid">${buttons}</div>`;
+  return `<div class="hero"><div style="font-size:22px;font-weight:900">⚙ Админ-панель</div></div>
+  <div style="margin-top:8px;font-weight:900">Выбор уровня</div><div class="admin-grid">${buttons}</div>`;
 }
 function openAdmin(){ setModalScene(); $('modalTitle').textContent='Админ-панель'; $('modalBody').innerHTML=adminHtml(); $('modal').classList.add('open'); }
 function adminMarkCurrentTask(){
@@ -1875,9 +2008,9 @@ function adminLoadLevel(n){
 }
 
 function infoHtml(){
- return `<div class="hero"><div class="big">🏴‍☠️</div><div style="text-align:center;font-size:18px;font-weight:900">Пройди уровень → получи наковальни → создавай предметы → совмещай → получай сокровища</div></div>
- <div class="info-grid"><div>1️⃣ Уровни<br><small>1 / 2 / 3 🪙</small></div><div>2️⃣ Создание<br><small>1 🪙 → T1</small></div><div>3️⃣ Merge<br><small>2 одинаковых</small></div><div>4️⃣ Цепочка<br><small>T1 → T12</small></div></div>
- <p><b>Баланс поля:</b> закрытые коробки открываются в webbed-предметы; webbed-предмет нельзя объединить с другим webbed-предметом. Остаток предметов переносится на следующий этап.</p>`
+  const remote=UI_ASSET_BASE+'Help.png';
+  const local=UI_ASSET_LOCAL+'Help.png';
+  return `<div class="help-wrap"><img class="help-image" src="${remote}" alt="Как играть" onerror="if(this.dataset.fb)return;this.dataset.fb=1;this.src='${local}'"></div>`;
 }
 function openInfo(){setModalScene();$('modalTitle').textContent='Как играть';$('modalBody').innerHTML=infoHtml();$('modal').classList.add('open')}
 function closeModal(){setModalScene();$('modal').classList.remove('open');$('modalTitle').textContent=''}
@@ -1890,9 +2023,17 @@ function grandPrize(){
 }
 // Balance defaults: starting currency 2; spawn price 1; level win rewards 1 / 2 / 3 by difficulty band.
 $('winBtn').addEventListener('click',()=>{
-  const reward=stage>=8?3:(stage>=5?2:1);
-  currency+=reward;toast('🏁 Победа: +'+reward+' 🪙');render()
+  currency+=100;render()
 });
+function pulseSpawnButton(){
+  const btn=$('spawn');
+  if(!btn||btn.disabled||btn.classList.contains('spawn-press'))return;
+  btn.classList.remove('spawn-idle-pulse');
+  void btn.offsetWidth;
+  btn.classList.add('spawn-idle-pulse');
+  setTimeout(()=>btn.classList.remove('spawn-idle-pulse'),760);
+}
+setInterval(pulseSpawnButton,15000);
 $('spawn').addEventListener('click',()=>{
   if(currency<1||queue.length||grid.every(Boolean)){toast('⛔ Нельзя создать предмет сейчас');return}
   const btn=$('spawn');btn.classList.remove('spawn-press');void btn.offsetWidth;btn.classList.add('spawn-press');setTimeout(()=>btn.classList.remove('spawn-press'),380);
